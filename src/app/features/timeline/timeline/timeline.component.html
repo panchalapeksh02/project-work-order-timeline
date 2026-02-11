@@ -1,0 +1,16 @@
+<!-- src/app/features/timeline/timeline.component.html -->
+<div class="timeline-container">
+  <!-- 1. Header Area -->
+  <header class="timeline-header">
+    <h1>Work Order Schedule</h1>
+    
+    <div class="controls">
+      <label>Timescale:</label>
+      <select [value]="viewMode()" (change)="setViewMode($any($event.target).value)">
+        <option value="Day">Day</option>
+        <option value="Week">Week</option>
+        <option value="Month">Month</option>
+      </select>
+    </div>
+  </header>
+</div>
