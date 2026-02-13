@@ -1,9 +1,7 @@
-<!-- src/app/features/timeline/timeline.component.html -->
 <div class="timeline-container">
-  <!-- 1. Header Area -->
+  <!-- Header -->
   <header class="timeline-header">
     <h1>Work Order Schedule</h1>
-    
     <div class="controls">
       <label>Timescale:</label>
       <select [value]="viewMode()" (change)="setViewMode($any($event.target).value)">
@@ -13,4 +11,42 @@
       </select>
     </div>
   </header>
+
+  <div class="timeline-body">
+    <!-- Left Panel: Work Centers -->
+    <div class="sidebar">
+      <div class="sidebar-header">Work Center</div>
+      <div class="sidebar-content">
+        <!-- Loop through Work Centers -->
+        @for (wc of workCenters(); track wc.docId) {
+          <div class="sidebar-row">{{ wc.data.name }}</div>
+        }
+      </div>
+    </div>
+
+    <!-- Right Panel: Grid -->
+    <div class="grid-viewport">
+      <!-- Date Header -->
+      <div class="grid-header">
+        @for (date of visibleDates(); track date) {
+          <div class="date-cell">
+            <!-- Format date based on view mode (Simple logic in template for now) -->
+            {{ date | date: (viewMode() === 'Month' ? 'MMM yyyy' : 'dd MMM') }}
+          </div>
+        }
+      </div>
+
+      <!-- Grid Rows -->
+      <div class="grid-content">
+        @for (wc of workCenters(); track wc.docId) {
+          <div class="grid-row">
+            <!-- Grid Lines (Visual) -->
+            @for (date of visibleDates(); track date) {
+               <div class="grid-cell"></div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
 </div>

@@ -34,3 +34,123 @@
     }
   }
 }
+
+.timeline-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden; /* Prevent full page scroll, handle inner scroll */
+}
+
+.sidebar {
+  width: 250px;
+  background: white;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0; /* Prevent shrinking */
+  z-index: 10;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+
+  .sidebar-header {
+    height: 50px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-weight: bold;
+    color: #555;
+    background: #f9f9f9;
+  }
+
+  .placeholder-item {
+    height: 60px; /* Row height */
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+}
+
+.grid-viewport {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto; /* Allow horizontal scroll */
+  background: white;
+}
+
+.grid-header {
+  height: 50px;
+  display: flex;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+  
+  .date-placeholder {
+    width: 100px; /* Fixed width for now */
+    border-right: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+}
+
+.grid-content {
+  .grid-row-placeholder {
+    height: 60px;
+    border-bottom: 1px solid #eee;
+    width: 2000px; /* Force scroll for demo */
+  }
+}
+
+/* Add/Update these classes */
+
+.sidebar-content {
+  .sidebar-row {
+    height: 60px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #333;
+  }
+}
+
+.grid-header {
+  display: flex; /* Ensure horizontal layout */
+  height: 50px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+  width: max-content; /* Allow growing beyond viewport */
+
+  .date-cell {
+    width: 100px; /* Fixed width per column */
+    border-right: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: #666;
+    flex-shrink: 0;
+  }
+}
+
+.grid-content {
+  width: max-content; /* Allow growing beyond viewport */
+
+  .grid-row {
+    position: relative; /* Important for absolute positioning of bars later */
+    height: 60px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+
+    .grid-cell {
+      width: 100px; /* Match header width */
+      height: 100%;
+      border-right: 1px solid #f5f5f5;
+      flex-shrink: 0;
+    }
+  }
+}
+

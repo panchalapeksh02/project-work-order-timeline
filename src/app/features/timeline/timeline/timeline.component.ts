@@ -1,19 +1,25 @@
-// src/app/features/timeline/timeline.component.ts
-import { Component, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TimelineService } from '../../../core/services/timeline.service';
 import { ViewMode } from '../../../core/models/models';
 
 @Component({
   selector: 'app-timeline',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule], // We need CommonModule for @for loops and DatePipe
   templateUrl: './timeline.component.html',
   styleUrl: './timeline.component.scss'
 })
 export class TimelineComponent {
-  viewMode = signal<ViewMode>('Day');
+  // Inject the service
+  timelineService = inject(TimelineService);
+
+  // Expose signals for the template
+  viewMode = this.timelineService.viewMode;
+  workCenters = this.timelineService.workCenters;
+  visibleDates = this.timelineService.visibleDates;
 
   setViewMode(mode: string) {
-    this.viewMode.set(mode as ViewMode);
+    this.timelineService.setMode(mode as ViewMode);
   }
 }
