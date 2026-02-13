@@ -25,7 +25,6 @@
 
     <!-- Right Panel: Grid -->
     <div class="grid-viewport">
-      <!-- Date Header -->
       <div class="grid-header">
         @for (date of visibleDates(); track date) {
           <div class="date-cell">
@@ -34,28 +33,24 @@
         }
       </div>
 
-      <!-- Grid Rows -->
       <div class="grid-content">
         @for (wc of workCenters(); track wc.docId) {
-          <div class="grid-row">
+          <div class="grid-row" (click)="onCreateOrder(wc.docId)">
             
-            <!-- Layer 1: Background Grid Lines -->
             <div class="grid-lines-layer">
               @for (date of visibleDates(); track date) {
                  <div class="grid-cell"></div>
               }
             </div>
 
-            <!-- Layer 2: Work Order Bars -->
             <div class="bars-layer">
               @for (order of workOrders(); track order.docId) {
-                <!-- Only render if this order belongs to this Work Center -->
                 @if (order.data.workCenterId === wc.docId) {
                   <div 
                     class="work-order-bar" 
-                    [ngClass]="order.data.status || 'open'" 
+                    [ngClass]="order.data.status"
                     [ngStyle]="getOrderStyles(order)"
-                    [title]="order.data.name"
+                    (click)="onEditOrder(order, $event)"
                   >
                     <span class="order-name">{{ order.data.name }}</span>
                     <button class="action-btn">⋮</button>
@@ -69,4 +64,14 @@
       </div>
     </div>
   </div>
+
+  <!-- 3. ADD THE MODAL COMPONENT HERE -->
+  @if (isModalOpen() && selectedOrder()) {
+    <app-order-modal 
+      [order]="selectedOrder()!"
+      (closeEvent)="closeModal()"
+      (saveEvent)="onSaveOrder($event)"
+      (deleteEvent)="onDeleteOrder($event)"
+    ></app-order-modal>
+  }
 </div>

@@ -1,0 +1,39 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>{{ isEditMode ? 'Edit Order' : 'New Order' }}</h2>
+    
+    <div class="form-group">
+      <label>Order Name</label>
+      <input [(ngModel)]="localOrder.data.name" type="text" placeholder="Order #123">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Start Date</label>
+        <input [(ngModel)]="localOrder.data.startDate" type="date">
+      </div>
+      <div class="form-group">
+        <label>End Date</label>
+        <input [(ngModel)]="localOrder.data.endDate" type="date">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Status</label>
+      <select [(ngModel)]="localOrder.data.status">
+        <option value="open">Open</option>
+        <option value="in-progress">In Progress</option>
+        <option value="blocked">Blocked</option>
+        <option value="complete">Complete</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <button class="btn-delete" *ngIf="isEditMode" (click)="onDelete()">Delete</button>
+      <div class="right-actions">
+        <button class="btn-cancel" (click)="close()">Cancel</button>
+        <button class="btn-save" (click)="save()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
