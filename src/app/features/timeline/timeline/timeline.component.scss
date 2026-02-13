@@ -118,14 +118,14 @@
 }
 
 .grid-header {
-  display: flex; /* Ensure horizontal layout */
+  display: flex;
   height: 50px;
   background: #f9f9f9;
   border-bottom: 1px solid #e0e0e0;
-  width: max-content; /* Allow growing beyond viewport */
+  width: max-content; 
 
   .date-cell {
-    width: 100px; /* Fixed width per column */
+    width: 100px; /* CRITICAL: Matches CELL_WIDTH_PX in TS */
     border-right: 1px solid #eee;
     display: flex;
     align-items: center;
@@ -133,24 +133,91 @@
     font-size: 12px;
     color: #666;
     flex-shrink: 0;
+    box-sizing: border-box; // Ensure padding/border doesn't add to width
   }
 }
 
 .grid-content {
-  width: max-content; /* Allow growing beyond viewport */
+  width: max-content;
 
   .grid-row {
-    position: relative; /* Important for absolute positioning of bars later */
+    position: relative; 
     height: 60px;
     border-bottom: 1px solid #eee;
-    display: flex;
-
-    .grid-cell {
-      width: 100px; /* Match header width */
-      height: 100%;
-      border-right: 1px solid #f5f5f5;
-      flex-shrink: 0;
-    }
+    background-color: transparent;
   }
 }
 
+.grid-lines-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  z-index: 1;
+
+  .grid-cell {
+    width: 100px; /* CRITICAL: Matches CELL_WIDTH_PX in TS */
+    height: 100%;
+    border-right: 1px solid #f5f5f5;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+}
+
+.bars-layer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10;
+  pointer-events: none; 
+  width: 100%;
+}
+
+.work-order-bar {
+  position: absolute; // Essential for 'left' property to work
+  top: 10px;
+  height: 40px;
+  border-radius: 6px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  cursor: pointer;
+  pointer-events: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-sizing: border-box;
+  z-index: 20; /* Ensure bars sit on top of everything */
+  pointer-events: auto;
+
+  &:hover {
+    transform: scale(1.02);
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .order-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .action-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 5px;
+    &:hover { opacity: 0.8; }
+  }
+
+  // Ensure these match your data.status values
+  &.open { background-color: #3B82F6; }       
+  &.in-progress { background-color: #8B5CF6; } 
+  &.complete { background-color: #10B981; }    
+  &.blocked { background-color: #F59E0B; }     
+}

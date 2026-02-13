@@ -17,7 +17,6 @@
     <div class="sidebar">
       <div class="sidebar-header">Work Center</div>
       <div class="sidebar-content">
-        <!-- Loop through Work Centers -->
         @for (wc of workCenters(); track wc.docId) {
           <div class="sidebar-row">{{ wc.data.name }}</div>
         }
@@ -30,7 +29,6 @@
       <div class="grid-header">
         @for (date of visibleDates(); track date) {
           <div class="date-cell">
-            <!-- Format date based on view mode (Simple logic in template for now) -->
             {{ date | date: (viewMode() === 'Month' ? 'MMM yyyy' : 'dd MMM') }}
           </div>
         }
@@ -40,10 +38,32 @@
       <div class="grid-content">
         @for (wc of workCenters(); track wc.docId) {
           <div class="grid-row">
-            <!-- Grid Lines (Visual) -->
-            @for (date of visibleDates(); track date) {
-               <div class="grid-cell"></div>
-            }
+            
+            <!-- Layer 1: Background Grid Lines -->
+            <div class="grid-lines-layer">
+              @for (date of visibleDates(); track date) {
+                 <div class="grid-cell"></div>
+              }
+            </div>
+
+            <!-- Layer 2: Work Order Bars -->
+            <div class="bars-layer">
+              @for (order of workOrders(); track order.docId) {
+                <!-- Only render if this order belongs to this Work Center -->
+                @if (order.data.workCenterId === wc.docId) {
+                  <div 
+                    class="work-order-bar" 
+                    [ngClass]="order.data.status || 'open'" 
+                    [ngStyle]="getOrderStyles(order)"
+                    [title]="order.data.name"
+                  >
+                    <span class="order-name">{{ order.data.name }}</span>
+                    <button class="action-btn">⋮</button>
+                  </div>
+                }
+              }
+            </div>
+
           </div>
         }
       </div>

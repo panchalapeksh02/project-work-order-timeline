@@ -18,40 +18,38 @@ export class DataService {
   }
 
   getWorkOrders(): WorkOrderDocument[] {
-    // Note: Dates are hardcoded relative to a hypothetical "today". 
-    // In a real app, you might generate these relative to new Date() to always show data.
     return [
       {
         docId: 'wo1', docType: 'workOrder',
-        data: { name: 'Order #101', workCenterId: 'wc1', status: 'complete', startDate: '2025-02-10', endDate: '2025-02-12' }
+        data: { name: 'Order #101', workCenterId: 'wc1', status: 'complete', startDate: '2026-02-10', endDate: '2026-02-12' }
       },
       {
         docId: 'wo2', docType: 'workOrder',
-        data: { name: 'Order #102', workCenterId: 'wc1', status: 'in-progress', startDate: '2025-02-13', endDate: '2025-02-16' }
+        data: { name: 'Order #102', workCenterId: 'wc1', status: 'in-progress', startDate: '2026-02-13', endDate: '2026-02-16' }
       },
       {
         docId: 'wo3', docType: 'workOrder',
-        data: { name: 'Order #205', workCenterId: 'wc2', status: 'blocked', startDate: '2025-02-11', endDate: '2025-02-15' }
+        data: { name: 'Order #205', workCenterId: 'wc2', status: 'blocked', startDate: '2026-02-11', endDate: '2026-02-15' }
       },
       {
         docId: 'wo4', docType: 'workOrder',
-        data: { name: 'Order #300', workCenterId: 'wc3', status: 'open', startDate: '2025-02-10', endDate: '2025-02-18' }
+        data: { name: 'Order #300', workCenterId: 'wc3', status: 'open', startDate: '2026-02-10', endDate: '2026-02-18' }
       },
       {
         docId: 'wo5', docType: 'workOrder',
-        data: { name: 'Order #401', workCenterId: 'wc4', status: 'complete', startDate: '2025-02-09', endDate: '2025-02-11' }
+        data: { name: 'Order #401', workCenterId: 'wc4', status: 'complete', startDate: '2026-02-09', endDate: '2026-02-11' }
       },
       {
         docId: 'wo6', docType: 'workOrder',
-        data: { name: 'Order #402', workCenterId: 'wc4', status: 'in-progress', startDate: '2025-02-12', endDate: '2025-02-14' }
+        data: { name: 'Order #402', workCenterId: 'wc4', status: 'in-progress', startDate: '2026-02-12', endDate: '2026-02-14' }
       },
       {
         docId: 'wo7', docType: 'workOrder',
-        data: { name: 'Order #500', workCenterId: 'wc5', status: 'open', startDate: '2025-02-14', endDate: '2025-02-20' }
+        data: { name: 'Order #500', workCenterId: 'wc5', status: 'open', startDate: '2026-02-14', endDate: '2026-02-20' }
       },
       {
         docId: 'wo8', docType: 'workOrder',
-        data: { name: 'Order #501', workCenterId: 'wc5', status: 'open', startDate: '2025-02-08', endDate: '2025-02-10' }
+        data: { name: 'Order #501', workCenterId: 'wc5', status: 'open', startDate: '2026-02-08', endDate: '2026-02-10' }
       }
     ];
   }
