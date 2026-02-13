@@ -1,4 +1,3 @@
-// src/app/core/services/data.service.ts
 import { Injectable } from '@angular/core';
 import { WorkCenterDocument, WorkOrderDocument } from '../models/models';
 
@@ -6,6 +5,7 @@ import { WorkCenterDocument, WorkOrderDocument } from '../models/models';
   providedIn: 'root'
 })
 export class DataService {
+  private readonly STORAGE_KEY = 'app_work_orders';
 
   getWorkCenters(): WorkCenterDocument[] {
     return [
@@ -18,7 +18,14 @@ export class DataService {
   }
 
   getWorkOrders(): WorkOrderDocument[] {
-    return [
+    // 1. Try to load from Local Storage
+    const stored = localStorage.getItem(this.STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+
+    // 2. If empty, return default data (and save it for next time)
+    const defaultData: WorkOrderDocument[] = [
       {
         docId: 'wo1', docType: 'workOrder',
         data: { name: 'Order #101', workCenterId: 'wc1', status: 'complete', startDate: '2026-02-10', endDate: '2026-02-12' }
@@ -27,30 +34,14 @@ export class DataService {
         docId: 'wo2', docType: 'workOrder',
         data: { name: 'Order #102', workCenterId: 'wc1', status: 'in-progress', startDate: '2026-02-13', endDate: '2026-02-16' }
       },
-      {
-        docId: 'wo3', docType: 'workOrder',
-        data: { name: 'Order #205', workCenterId: 'wc2', status: 'blocked', startDate: '2026-02-11', endDate: '2026-02-15' }
-      },
-      {
-        docId: 'wo4', docType: 'workOrder',
-        data: { name: 'Order #300', workCenterId: 'wc3', status: 'open', startDate: '2026-02-10', endDate: '2026-02-18' }
-      },
-      {
-        docId: 'wo5', docType: 'workOrder',
-        data: { name: 'Order #401', workCenterId: 'wc4', status: 'complete', startDate: '2026-02-09', endDate: '2026-02-11' }
-      },
-      {
-        docId: 'wo6', docType: 'workOrder',
-        data: { name: 'Order #402', workCenterId: 'wc4', status: 'in-progress', startDate: '2026-02-12', endDate: '2026-02-14' }
-      },
-      {
-        docId: 'wo7', docType: 'workOrder',
-        data: { name: 'Order #500', workCenterId: 'wc5', status: 'open', startDate: '2026-02-14', endDate: '2026-02-20' }
-      },
-      {
-        docId: 'wo8', docType: 'workOrder',
-        data: { name: 'Order #501', workCenterId: 'wc5', status: 'open', startDate: '2026-02-08', endDate: '2026-02-10' }
-      }
+      // ... add more sample data if you wish
     ];
+
+    this.saveWorkOrders(defaultData);
+    return defaultData;
+  }
+
+  saveWorkOrders(orders: WorkOrderDocument[]): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(orders));
   }
 }

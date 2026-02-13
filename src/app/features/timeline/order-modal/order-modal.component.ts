@@ -16,11 +16,11 @@ export class OrderModalComponent implements OnInit {
   @Output() saveEvent = new EventEmitter<WorkOrderDocument>();
   @Output() deleteEvent = new EventEmitter<string>();
 
-  localOrder: any; // TBD: Create a proper interface for this if needed
+  localOrder: any;
   isEditMode = false;
+  errorMessage = ''; // To show validation errors
 
   ngOnInit() {
-    // Create a deep copy to avoid editing the parent data directly until saved
     if (this.order) {
       this.localOrder = JSON.parse(JSON.stringify(this.order));
       this.isEditMode = !!this.localOrder.docId;
@@ -28,7 +28,39 @@ export class OrderModalComponent implements OnInit {
   }
 
   save() {
-    this.saveEvent.emit(this.localOrder);
+    if (this.validate()) {
+      this.saveEvent.emit(this.localOrder);
+    }
+  }
+
+  validate(): boolean {
+    this.errorMessage = '';
+    const data = this.localOrder.data;
+
+    // 1. Check Required Fields
+    if (!data.name || !data.name.trim()) {
+      this.errorMessage = 'Order Name is required.';
+      return false;
+    }
+    if (!data.startDate) {
+      this.errorMessage = 'Start Date is required.';
+      return false;
+    }
+    if (!data.endDate) {
+      this.errorMessage = 'End Date is required.';
+      return false;
+    }
+
+    // 2. Check Date Logic
+    const start = new Date(data.startDate).getTime();
+    const end = new Date(data.endDate).getTime();
+
+    if (end < start) {
+      this.errorMessage = 'End Date cannot be before Start Date.';
+      return false;
+    }
+
+    return true;
   }
 
   close() {

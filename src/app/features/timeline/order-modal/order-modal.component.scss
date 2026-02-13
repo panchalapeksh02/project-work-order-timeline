@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .modal-content {
@@ -43,7 +43,7 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    box-sizing: border-box; // Ensures padding doesn't affect width
+    box-sizing: border-box;
     font-size: 14px;
 
     &:focus {
@@ -76,6 +76,19 @@
     margin-left: auto;
   }
 }
+
+.error-alert {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 13px;
+  border: 1px solid #fca5a5;
+  display: flex;
+  align-items: center;
+}
+
 
 button {
   padding: 8px 16px;
