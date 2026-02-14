@@ -48,7 +48,13 @@
                 @if (order.data.workCenterId === wc.docId) {
                   <div 
                     class="work-order-bar" 
-                    [ngClass]="order.data.status"
+                    [ngClass]="{
+                      'conflict': conflictingOrderIds().has(order.docId),
+                      'open': order.data.status === 'open',
+                      'in-progress': order.data.status === 'in-progress',
+                      'complete': order.data.status === 'complete',
+                      'blocked': order.data.status === 'blocked'
+                    }"
                     [ngStyle]="getOrderStyles(order)"
                     (click)="onEditOrder(order, $event)"
                   >

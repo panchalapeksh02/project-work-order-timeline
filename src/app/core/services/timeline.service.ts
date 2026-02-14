@@ -108,4 +108,36 @@ export class TimelineService {
       return newList;
     });
   }
+
+  // Add this inside the TimelineService class
+
+  // A Set of IDs for orders that have conflicts
+  readonly conflictingOrderIds = computed(() => {
+    const orders = this.workOrders();
+    const conflicts = new Set<string>();
+
+    // Compare every order against every other order
+    for (let i = 0; i < orders.length; i++) {
+      for (let j = i + 1; j < orders.length; j++) {
+        const a = orders[i];
+        const b = orders[j];
+
+        // 1. Must be on the same Work Center
+        if (a.data.workCenterId !== b.data.workCenterId) continue;
+
+        // 2. Check Date Overlap
+        const startA = new Date(a.data.startDate).getTime();
+        const endA = new Date(a.data.endDate).getTime();
+        const startB = new Date(b.data.startDate).getTime();
+        const endB = new Date(b.data.endDate).getTime();
+
+        // Overlap Formula: (StartA <= EndB) and (EndA >= StartB)
+        if (startA <= endB && endA >= startB) {
+          conflicts.add(a.docId);
+          conflicts.add(b.docId);
+        }
+      }
+    }
+    return conflicts;
+  });
 }

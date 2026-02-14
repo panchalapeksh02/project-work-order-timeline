@@ -215,6 +215,21 @@
     &:hover { opacity: 0.8; }
   }
 
+  &.conflict {
+    border: 2px solid #ef4444; /* Bright Red Border */
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); /* Red Glow */
+    z-index: 50; /* Ensure it sits on top */
+    
+    /* Optional: Add a striped pattern to make it really obvious */
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 0, 0, 0.1) 10px,
+      rgba(255, 0, 0, 0.1) 20px
+    );
+  }
+
   // Ensure these match your data.status values
   &.open { background-color: #3B82F6; }       
   &.in-progress { background-color: #8B5CF6; } 

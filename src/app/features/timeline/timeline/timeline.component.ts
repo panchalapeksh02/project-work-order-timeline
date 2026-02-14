@@ -19,6 +19,8 @@ export class TimelineComponent {
   workOrders = this.timelineService.workOrders;
   visibleDates = this.timelineService.visibleDates;
 
+  conflictingOrderIds = this.timelineService.conflictingOrderIds;
+
   // --- Modal State ---
   selectedOrder = signal<WorkOrderDocument | null>(null);
   isModalOpen = signal(false);
