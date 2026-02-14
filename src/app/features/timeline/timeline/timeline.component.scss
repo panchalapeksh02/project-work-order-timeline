@@ -236,3 +236,39 @@
   &.complete { background-color: #10B981; }    
   &.blocked { background-color: #F59E0B; }     
 }
+
+/* Search Box Styling */
+.search-box {
+  margin-right: 15px;
+  input {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 200px;
+  }
+}
+
+/* Group Header Styling (Sidebar) */
+.group-header {
+  background-color: #e5e7eb; /* Light gray */
+  color: #374151;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #d1d5db;
+  height: 24px; /* Fixed height */
+  display: flex;
+  align-items: center;
+}
+
+/* Group Header Spacer (Grid Side) */
+.group-header-spacer {
+  height: 24px; /* Must match sidebar header height + padding/borders */
+  background-color: #f3f4f6; /* Slightly lighter than sidebar header */
+  border-bottom: 1px solid #e5e7eb;
+  width: 100%;
+}
+

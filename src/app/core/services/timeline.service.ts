@@ -14,6 +14,7 @@ export class TimelineService {
   readonly workOrders = signal<WorkOrderDocument[]>(this.dataService.getWorkOrders());
   readonly viewMode = signal<ViewMode>('Day');
   readonly currentDate = signal<Date>(new Date());
+  readonly searchTerm = signal<string>('');
 
   // --- Computed Values (Derived State) ---
 
@@ -109,8 +110,6 @@ export class TimelineService {
     });
   }
 
-  // Add this inside the TimelineService class
-
   // A Set of IDs for orders that have conflicts
   readonly conflictingOrderIds = computed(() => {
     const orders = this.workOrders();
@@ -140,4 +139,27 @@ export class TimelineService {
     }
     return conflicts;
   });
+
+  // --- Computed: Filtered & Grouped Work Centers ---
+  readonly filteredWorkCenters = computed(() => {
+    const term = this.searchTerm().toLowerCase();
+    const allCenters = this.workCenters();
+
+    // 1. Filter by Name
+    const filtered = allCenters.filter(wc => 
+      wc.data.name.toLowerCase().includes(term)
+    );
+
+    // 2. Sort by Group (Optional, keeps them organized)
+    return filtered.sort((a, b) => {
+      const groupA = a.data.group || 'Other';
+      const groupB = b.data.group || 'Other';
+      return groupA.localeCompare(groupB);
+    });
+  });
+
+  // Action to update search
+  setSearchTerm(term: string) {
+    this.searchTerm.set(term);
+  }
 }

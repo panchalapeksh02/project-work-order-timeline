@@ -8,6 +8,7 @@ export interface WorkCenterDocument {
   docType: 'workCenter';
   data: {
     name: string;
+    group?: string;
   };
 }
 

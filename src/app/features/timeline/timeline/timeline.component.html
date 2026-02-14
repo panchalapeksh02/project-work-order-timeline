@@ -3,6 +3,10 @@
   <header class="timeline-header">
     <h1>Work Order Schedule</h1>
     <div class="controls">
+      <!-- Search Box -->
+      <div class="search-box">
+        <input type="text" placeholder="Search resources..." (input)="onSearch($event)">
+      </div>
       <label>Timescale:</label>
       <select [value]="viewMode()" (change)="setViewMode($any($event.target).value)">
         <option value="Day">Day</option>
@@ -17,7 +21,11 @@
     <div class="sidebar">
       <div class="sidebar-header">Work Center</div>
       <div class="sidebar-content">
-        @for (wc of workCenters(); track wc.docId) {
+        @for (wc of filteredWorkCenters(); track wc.docId; let i = $index) {
+          <!-- Show Group Header if it's the first item OR different from previous -->
+          @if (i === 0 || getGroup(wc) !== getGroup(filteredWorkCenters()[i-1])) {
+            <div class="group-header">{{ getGroup(wc) }}</div>
+          }
           <div class="sidebar-row">{{ wc.data.name }}</div>
         }
       </div>
@@ -34,7 +42,11 @@
       </div>
 
       <div class="grid-content">
-        @for (wc of workCenters(); track wc.docId) {
+        @for (wc of filteredWorkCenters(); track wc.docId; let i = $index) 
+        {
+          @if (i === 0 || getGroup(wc) !== getGroup(filteredWorkCenters()[i-1])) {
+             <div class="group-header-spacer"></div>
+          }
           <div class="grid-row" (click)="onCreateOrder(wc.docId)">
             
             <div class="grid-lines-layer">

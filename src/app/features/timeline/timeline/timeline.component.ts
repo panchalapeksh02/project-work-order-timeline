@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimelineService } from '../../../core/services/timeline.service';
-import { ViewMode, WorkOrderDocument } from '../../../core/models/models';
+import { ViewMode, WorkCenterDocument, WorkOrderDocument } from '../../../core/models/models';
 import { OrderModalComponent } from '../order-modal/order-modal.component';
 
 @Component({
@@ -21,12 +21,25 @@ export class TimelineComponent {
 
   conflictingOrderIds = this.timelineService.conflictingOrderIds;
 
+  filteredWorkCenters = this.timelineService.filteredWorkCenters;
+
   // --- Modal State ---
   selectedOrder = signal<WorkOrderDocument | null>(null);
   isModalOpen = signal(false);
 
   setViewMode(mode: ViewMode) {
     this.timelineService.setMode(mode);
+  }
+
+  // Helper to detect when a group changes (for rendering headers)
+  getGroup(wc: WorkCenterDocument): string {
+    return wc.data.group || 'Other';
+  }
+
+  // Handle Search Input
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.timelineService.setSearchTerm(input.value);
   }
 
   // --- Modal Actions ---
