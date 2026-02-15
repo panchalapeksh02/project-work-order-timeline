@@ -4,121 +4,116 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+  background: rgba(0, 0, 0, 0.3); /* Lighter backdrop */
+  z-index: 1000;
+  /* Flexbox is removed so we can position the panel absolutely */
 }
 
 .modal-content {
+  position: absolute;
+  top: 0;
+  right: 0; /* Anchor to the right */
+  width: 400px; /* Fixed width per requirements */
+  height: 100%; /* Full height */
   background: white;
-  padding: 24px;
-  border-radius: 8px;
-  width: 400px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.2s ease-out;
+  padding: 30px;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  
+  /* Slide In Animation */
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); // Smooth ease-out
+  border-left: 1px solid #e0e0e0;
+  border-radius: 0; /* No rounded corners on the side */
 
   h2 {
     margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #333;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
   }
 }
 
+/* ... Keep your existing form-group, input, and button styles below ... */
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 
   label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: 500;
     font-size: 14px;
-    color: #555;
+    color: #374151;
   }
 
   input, select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
     border-radius: 6px;
     box-sizing: border-box;
     font-size: 14px;
+    transition: border-color 0.15s;
 
     &:focus {
       outline: none;
       border-color: #3B82F6;
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
   }
 }
 
 .form-row {
   display: flex;
-  gap: 12px;
-  
-  .form-group {
-    flex: 1;
-  }
+  gap: 15px;
+  .form-group { flex: 1; }
+}
+
+.error-alert {
+  background-color: #fef2f2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  border: 1px solid #fca5a5;
 }
 
 .actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 30px;
+  background: #f9fafb;
+  border-top: 1px solid #eee;
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #eee;
 
   .right-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin-left: auto;
   }
 }
 
-.error-alert {
-  background-color: #fee2e2;
-  color: #b91c1c;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  font-size: 13px;
-  border: 1px solid #fca5a5;
-  display: flex;
-  align-items: center;
-}
-
-
 button {
-  padding: 8px 16px;
+  padding: 9px 18px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
   font-size: 14px;
-  transition: background 0.2s;
 
-  &.btn-save {
-    background: #3B82F6;
-    color: white;
-    &:hover { background: #2563EB; }
-  }
-
-  &.btn-cancel {
-    background: #f3f4f6;
-    color: #374151;
-    &:hover { background: #e5e7eb; }
-  }
-
-  &.btn-delete {
-    background: #fee2e2;
-    color: #dc2626;
-    &:hover { background: #fecaca; }
-  }
+  &.btn-save { background: #2563EB; color: white; &:hover { background: #1d4ed8; } }
+  &.btn-cancel { background: white; border: 1px solid #d1d5db; color: #374151; &:hover { background: #f3f4f6; } }
+  &.btn-delete { background: transparent; color: #dc2626; &:hover { background: #fee2e2; } }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
